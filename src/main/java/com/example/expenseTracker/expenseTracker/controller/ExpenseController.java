@@ -1,7 +1,10 @@
 package com.example.expenseTracker.expenseTracker.controller;
 
 import com.example.expenseTracker.expenseTracker.services.ExpenseServices;
+import com.example.expenseTracker.expenseTracker.modal.Expense;
 
+import java.math.BigDecimal;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -15,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.expenseTracker.expenseTracker.dto.UserSearchCriteria;
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.ObjectMapper;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 
 @RestController
@@ -30,12 +35,14 @@ public class ExpenseController {
     }
 
     @PostMapping("/uploadStatement")
-    public ResponseEntity<String> uploadStatement(@RequestParam("file") MultipartFile file){
+    public ResponseEntity<String> uploadStatement(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("userId") BigDecimal userId) {
         System.out.println("file"+ file);
         if(file.isEmpty()){
             return ResponseEntity.badRequest().body("Please Select a valid file");
         }
-        String fileParsedResponse = String.valueOf(expenseServices.uploadStatement(file));
+        String fileParsedResponse = String.valueOf(expenseServices.uploadStatement(file, userId));
         return ResponseEntity.ok(fileParsedResponse);
     }
 
@@ -68,4 +75,10 @@ public class ExpenseController {
     public ResponseEntity<String> handleInvalidJson(JacksonException exception) {
         return ResponseEntity.badRequest().body("Invalid JSON format");
     }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<Expense>> getExpensesByUserId(@PathVariable BigDecimal userId) {
+        return ResponseEntity.ok(expenseServices.fetchAllTheEntry(userId));
+    }
+    
 }

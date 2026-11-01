@@ -57,7 +57,7 @@ public class HDFCBankStatementParser {
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yy");
 
-    public ApiResponse<Void> parsePdfFile(MultipartFile file){
+    public ApiResponse<Void> parsePdfFile(MultipartFile file, BigDecimal userId){
         try (InputStream is = file.getInputStream();
              PDDocument document = Loader.loadPDF(is.readAllBytes())) {
 
@@ -137,7 +137,7 @@ public class HDFCBankStatementParser {
                     descriptionAccumulator = new StringBuilder(initialDescription);
 
                     pendingExpense = new Expense(transactionDate, "", referenceNumber, valueDate,
-                            withdrawalAmount, depositAmount, closingBalance, "UNASSIGNED");
+                            withdrawalAmount, depositAmount, closingBalance, "UNASSIGNED", userId);
 
                 } else {
                     // Append continuation lines to the current transaction description

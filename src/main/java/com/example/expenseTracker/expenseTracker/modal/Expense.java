@@ -16,6 +16,9 @@ public class Expense {
     @Column(name = "transaction_date", nullable = false)
     private LocalDate transactionDate;
 
+    @Column(name = "user_id", nullable = false)
+    private BigDecimal userId;
+
     @Column(nullable = false, length = 2000)
     private String description;
 
@@ -40,7 +43,8 @@ public class Expense {
 
     public Expense() {}
 
-    public Expense(LocalDate transactionDate, String description, String referenceNumber, LocalDate valueDate, BigDecimal withdrawalAmount, BigDecimal depositAmount, BigDecimal closingBalance, String category) {
+    public Expense(LocalDate transactionDate, String description, String referenceNumber, LocalDate valueDate, BigDecimal withdrawalAmount, BigDecimal depositAmount, BigDecimal closingBalance, String category, BigDecimal userId) {
+        this.userId = userId;
         this.transactionDate = transactionDate;
         this.description = description;
         this.referenceNumber = referenceNumber;
@@ -49,6 +53,14 @@ public class Expense {
         this.depositAmount = depositAmount;
         this.closingBalance = closingBalance;
         this.category = category != null ? category : "UNASSIGNED";
+    }
+
+    public BigDecimal getUserId(){
+        return  userId;
+    }
+
+    public void setUserId(BigDecimal user_id){
+        this.userId = user_id;
     }
 
     public Long getId() {

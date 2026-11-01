@@ -1,6 +1,9 @@
 package com.example.expenseTracker.expenseTracker.dto;
 
+import java.math.BigDecimal;
 import java.sql.Date;
+
+import javax.swing.ButtonGroup;
 
 public class UserSearchCriteria {
     private String description;
@@ -10,6 +13,8 @@ public class UserSearchCriteria {
     private int depositAmount;
     private int closingBalance;
     private String category;
+    private BigDecimal userId;
+
     public String getDescription() {
         return description;
     }
@@ -52,6 +57,15 @@ public class UserSearchCriteria {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    public void setUserId(BigDecimal userId){
+        this.userId = userId;
+    }
+
+    public BigDecimal getUserId(){
+        return this.userId;
+    }
+
     public String viewAllData() {
     return "description=" + description
             + ", transactionDate=" + transactionDate
@@ -59,6 +73,7 @@ public class UserSearchCriteria {
             + ", withdrawalAmount=" + withdrawalAmount
             + ", depositAmount=" + depositAmount
             + ", closingBalance=" + closingBalance
+            + ", userId=" + userId
             + ", category=" + category;
 }
     

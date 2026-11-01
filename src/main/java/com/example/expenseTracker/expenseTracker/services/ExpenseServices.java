@@ -14,6 +14,7 @@ import com.example.expenseTracker.expenseTracker.dto.UserSearchCriteria;
 
 import java.math.BigDecimal;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,9 +34,9 @@ public class ExpenseServices {
             Pattern.CASE_INSENSITIVE
     );
 
-    public ApiResponse<Void> uploadStatement(MultipartFile file) {
+    public ApiResponse<Void> uploadStatement(MultipartFile file, BigDecimal userId) {
         return switch (detectBankName(file)) {
-            case "HDFC BANK" -> hdfcParser.parsePdfFile(file);
+            case "HDFC BANK" -> hdfcParser.parsePdfFile(file, userId);
             default -> ApiResponse.error("Invalid file");
         };
     }
@@ -73,7 +74,8 @@ public class ExpenseServices {
                 BigDecimal.valueOf(input.getWithdrawalAmount()),
                 BigDecimal.valueOf(input.getDepositAmount()),
                 BigDecimal.valueOf(input.getClosingBalance()),
-                input.getCategory()
+                input.getCategory(),
+                input.getUserId()
         );
         Expense savedExpense = expenseDb.save(expense);
         return "Saved successfully with id " + savedExpense.getId();
@@ -86,6 +88,7 @@ public class ExpenseServices {
 
     public Optional<Expense> updateStatement(Long id, UserSearchCriteria input) {
         return expenseDb.findById(id).map(expense -> {
+            expense.setUserId(input.getUserId());
             expense.setTransactionDate(input.getTransactionDate().toLocalDate());
             expense.setDescription(input.getDescription());
             expense.setReferenceNumber(input.getRefernceNumber());
@@ -107,4 +110,7 @@ public class ExpenseServices {
         return true;
     }
 
+    public List<Expense> fetchAllTheEntry(BigDecimal userId){
+        return expenseDb.findAllByUserId(userId);
+    }
 }

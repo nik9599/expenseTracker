@@ -2,6 +2,7 @@ package com.example.expenseTracker.expenseTracker.repository;
 
 import com.example.expenseTracker.expenseTracker.modal.Expense;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -27,5 +28,8 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
     // 6. Calculate total income (Sum of all values in your Deposit column)
     @Query("SELECT COALESCE(SUM(e.depositAmount), 0) FROM Expense e WHERE e.depositAmount IS NOT NULL")
     BigDecimal getTotalIncome();
+
+    @Query("SELECT e FROM Expense e WHERE e.userId = :userId")
+    List<Expense> findAllByUserId(@Param("userId") BigDecimal userId);
 
 }
