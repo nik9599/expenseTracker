@@ -71,9 +71,9 @@ public class ExpenseServices {
                 input.getDescription(),
                 input.getRefernceNumber(),
                 null,
-                BigDecimal.valueOf(input.getWithdrawalAmount()),
-                BigDecimal.valueOf(input.getDepositAmount()),
-                BigDecimal.valueOf(input.getClosingBalance()),
+                input.getWithdrawalAmount(),
+                input.getDepositAmount(),
+                input.getClosingBalance(),
                 input.getCategory(),
                 input.getUserId()
         );
@@ -92,9 +92,9 @@ public class ExpenseServices {
             expense.setTransactionDate(input.getTransactionDate().toLocalDate());
             expense.setDescription(input.getDescription());
             expense.setReferenceNumber(input.getRefernceNumber());
-            expense.setWithdrawalAmount(BigDecimal.valueOf(input.getWithdrawalAmount()));
-            expense.setDepositAmount(BigDecimal.valueOf(input.getDepositAmount()));
-            expense.setClosingBalance(BigDecimal.valueOf(input.getClosingBalance()));
+            expense.setWithdrawalAmount(input.getWithdrawalAmount());
+            expense.setDepositAmount(input.getDepositAmount());
+            expense.setClosingBalance(input.getClosingBalance());
             expense.setCategory(input.getCategory());
             return expenseDb.save(expense);
         });

@@ -3,15 +3,13 @@ package com.example.expenseTracker.expenseTracker.dto;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-import javax.swing.ButtonGroup;
-
 public class UserSearchCriteria {
     private String description;
     private Date transactionDate;
     private String refernceNumber;
-    private int withdrawalAmount;
-    private int depositAmount;
-    private int closingBalance;
+    private BigDecimal withdrawalAmount;
+    private BigDecimal depositAmount;
+    private BigDecimal closingBalance;
     private String category;
     private BigDecimal userId;
 
@@ -33,22 +31,22 @@ public class UserSearchCriteria {
     public void setRefernceNumber(String refernceNumber) {
         this.refernceNumber = refernceNumber;
     }
-    public int getWithdrawalAmount() {
+    public BigDecimal getWithdrawalAmount() {
         return withdrawalAmount;
     }
-    public void setWithdrawalAmount(int withdrawalAmount) {
+    public void setWithdrawalAmount(BigDecimal withdrawalAmount) {
         this.withdrawalAmount = withdrawalAmount;
     }
-    public int getDepositAmount() {
+    public BigDecimal getDepositAmount() {
         return depositAmount;
     }
-    public void setDepositAmount(int depositAmount) {
+    public void setDepositAmount(BigDecimal depositAmount) {
         this.depositAmount = depositAmount;
     }
-    public int getClosingBalance() {
+    public BigDecimal getClosingBalance() {
         return closingBalance;
     }
-    public void setClosingBalance(int closingBalance) {
+    public void setClosingBalance(BigDecimal closingBalance) {
         this.closingBalance = closingBalance;
     }
     public String getCategory() {
